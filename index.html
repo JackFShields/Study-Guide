@@ -14,12 +14,10 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: flex-start;
-      height: 100vh;
     }
     .logo {
       margin-top: 15vh;
-      margin-bottom: 30px;
+      margin-bottom: 20px;
     }
     .logo img {
       width: 272px;
@@ -56,9 +54,10 @@
     .buttons input:hover {
       border: 1px solid #dadce0;
     }
-    .toggle {
+    .message {
       margin-top: 20px;
       font-size: 14px;
+      color: #1a73e8;
     }
     .viewer {
       margin-top: 30px;
@@ -70,10 +69,29 @@
       height: 80vh;
       border: none;
     }
+    footer {
+      margin-top: auto;
+      width: 100%;
+      background: #f2f2f2;
+      font-size: 14px;
+      color: #70757a;
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 20px;
+    }
+    footer a {
+      color: #70757a;
+      text-decoration: none;
+      margin: 0 10px;
+    }
+    footer a:hover {
+      text-decoration: underline;
+    }
   </style>
 </head>
 <body>
   <div class="logo">
+    <!-- Replace with current doodle if desired -->
     <img src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png" alt="Google">
   </div>
   <div class="search-box">
@@ -83,14 +101,25 @@
     <input type="button" value="Google Search">
     <input type="button" value="I'm Feeling Lucky">
   </div>
-  <div class="toggle">
-    <label>
-      <input type="checkbox" id="useDirect"> Use direct link instead of iframe
-    </label>
+  <div class="message">
+    This Veterans Day learn about the career resources we offer to those who've served.
   </div>
   <div class="viewer">
     <iframe id="viewerFrame"></iframe>
   </div>
+  <footer>
+    <div>
+      <a href="#">About</a>
+      <a href="#">Advertising</a>
+      <a href="#">Business</a>
+      <a href="#">How Search works</a>
+    </div>
+    <div>
+      <a href="#">Privacy</a>
+      <a href="#">Terms</a>
+      <a href="#">Settings</a>
+    </div>
+  </footer>
 
   <script>
     document.getElementById('searchBox').addEventListener('keypress', function(e) {
@@ -112,12 +141,7 @@
         
         const translateUrl = `https://${domain}.translate.goog/${path}?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en-US&_x_tr_pto=wapp`;
         
-        const useDirect = document.getElementById('useDirect').checked;
-        if (useDirect) {
-          window.open(translateUrl, '_blank');
-        } else {
-          document.getElementById('viewerFrame').src = translateUrl;
-        }
+        document.getElementById('viewerFrame').src = translateUrl;
         e.target.value = '';
       }
     });
