@@ -2,8 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Google</title>
-  <link rel="icon" href="https://www.google.com/favicon.ico">
+  <title>New Tab</title>
+  <!-- Chromebook new tab favicon -->
+  <link rel="icon" href="https://ssl.gstatic.com/chrome/chrome-logos/logo-new-tab.png">
   <style>
     body {
       margin: 0;
@@ -17,17 +18,12 @@
       height: 100vh;
     }
     .logo {
-      font-size: 80px;
-      font-weight: bold;
-      font-family: 'Product Sans', Arial, sans-serif;
       margin-bottom: 30px;
     }
-    .logo span:nth-child(1) { color: #4285F4; }
-    .logo span:nth-child(2) { color: #DB4437; }
-    .logo span:nth-child(3) { color: #F4B400; }
-    .logo span:nth-child(4) { color: #4285F4; }
-    .logo span:nth-child(5) { color: #0F9D58; }
-    .logo span:nth-child(6) { color: #DB4437; }
+    .logo img {
+      width: 272px;
+      height: auto;
+    }
     .search-box {
       display: flex;
       align-items: center;
@@ -60,11 +56,16 @@
     .buttons input:hover {
       border: 1px solid #dadce0;
     }
+    .toggle {
+      margin-top: 20px;
+      font-size: 14px;
+    }
   </style>
 </head>
 <body>
   <div class="logo">
-    <span>G</span><span>o</span><span>o</span><span>g</span><span>l</span><span>e</span>
+    <!-- Current Google logo -->
+    <img src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png" alt="Google">
   </div>
   <div class="search-box">
     <input type="text" id="searchBox" placeholder="">
@@ -73,8 +74,19 @@
     <input type="button" value="Google Search">
     <input type="button" value="I'm Feeling Lucky">
   </div>
+  <div class="toggle">
+    <label>
+      <input type="checkbox" id="useDirect"> Use direct link instead of about:blank
+    </label>
+  </div>
 
   <script>
+    function openAboutBlank(contentHtml) {
+      const newWin = window.open('about:blank', '_blank');
+      newWin.document.write(contentHtml);
+      newWin.document.close();
+    }
+
     document.getElementById('searchBox').addEventListener('keypress', function(e) {
       if (e.key === 'Enter') {
         const input = e.target.value.trim();
@@ -93,7 +105,28 @@
         const path = parts.slice(1).join('/');
         
         const translateUrl = `https://${domain}.translate.goog/${path}?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en-US&_x_tr_pto=wapp`;
-        window.open(translateUrl, '_blank');
+        
+        const useDirect = document.getElementById('useDirect').checked;
+        if (useDirect) {
+          window.open(translateUrl, '_blank');
+        } else {
+          // Inject into about:blank
+          const html = `
+            <!DOCTYPE html>
+            <html>
+            <head>
+              <title>Google</title>
+              <link rel="icon" href="https://www.google.com/favicon.ico">
+            </head>
+            <body style="font-family:Arial,sans-serif;text-align:center;margin-top:20%;">
+              <img src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png" alt="Google">
+              <p>Loading <a href="${translateUrl}" target="_blank">${translateUrl}</a>…</p>
+              <script>window.location.href="${translateUrl}";<\/script>
+            </body>
+            </html>
+          `;
+          openAboutBlank(html);
+        }
         e.target.value = '';
       }
     });
