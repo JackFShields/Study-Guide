@@ -11,19 +11,28 @@
             align-items: center;
             height: 100vh;
             margin: 0;
-            background: #f0f0f0;
+            background: linear-gradient(180deg, #001f3f 0%, #000814 100%);
             font-family: Arial, sans-serif;
+            color: #00d9ff;
         }
         input {
             padding: 12px 20px;
             font-size: 16px;
-            border: 2px solid #ddd;
+            border: 2px solid #00d9ff;
             border-radius: 25px;
             width: 400px;
             outline: none;
+            background-color: #001020;
+            color: #00d9ff;
+            box-shadow: 0 0 10px rgba(0, 217, 255, 0.6);
+            transition: all 0.3s ease;
+        }
+        input::placeholder {
+            color: #007a99;
         }
         input:focus {
-            border-color: #4285f4;
+            border-color: #00ffff;
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.8);
         }
     </style>
 </head>
