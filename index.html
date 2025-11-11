@@ -3,164 +3,275 @@
 <head>
   <meta charset="UTF-8">
   <title>New Tab</title>
-  <link rel="icon" href="https://ssl.gstatic.com/chrome/chrome-logos/logo-new-tab.png">
+  <!-- Monochrome chrome-like favicon as embedded SVG -->
+  <link rel="icon" type="image/svg+xml"
+        href='data:image/svg+xml;utf8,
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+          <defs>
+            <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#d9d9d9"/>
+              <stop offset="100%" stop-color="#bfbfbf"/>
+            </linearGradient>
+          </defs>
+          <circle cx="32" cy="32" r="30" fill="url(%23g1)" stroke="#a6a6a6" stroke-width="2"/>
+          <circle cx="32" cy="32" r="12" fill="#ffffff" stroke="#a6a6a6" stroke-width="2"/>
+          <path d="M32 2 A30 30 0 0 1 60 34 L44 34 A12 12 0 0 0 32 22 Z" fill="#c7c7c7"/>
+          <path d="M6 20 A30 30 0 0 1 32 2 L32 22 A12 12 0 0 0 20 30 Z" fill="#d1d1d1"/>
+          <path d="M14 44 A30 30 0 0 1 60 34 L44 34 A12 12 0 0 0 32 46 Z" fill="#bdbdbd"/>
+        </svg>' />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
+    :root {
+      --text: #202124;
+      --link: #1a73e8;
+      --border: #dfe1e5;
+      --hover: #f8f9fa;
+      --muted: #70757a;
+    }
+    * { box-sizing: border-box; }
     body {
       margin: 0;
       font-family: Arial, sans-serif;
+      color: var(--text);
       background: #fff;
-      color: #202124;
       display: flex;
       flex-direction: column;
       min-height: 100vh;
     }
+
+    /* Header (top-right links) */
     header {
       display: flex;
       justify-content: flex-end;
       align-items: center;
-      padding: 10px 20px;
+      padding: 10px 16px;
       font-size: 14px;
     }
     header a {
-      margin-left: 15px;
-      color: #202124;
+      color: var(--text);
       text-decoration: none;
+      margin-left: 16px;
     }
-    header a:hover {
-      text-decoration: underline;
+    header a:hover { text-decoration: underline; }
+    .apps {
+      width: 24px; height: 24px;
+      margin-left: 16px;
+      display: inline-block;
+      border-radius: 50%;
     }
-    .logo {
-      margin-top: 15vh;
-      text-align: center;
+    .apps svg { width: 24px; height: 24px; }
+    .profile {
+      width: 32px; height: 32px;
+      margin-left: 16px;
+      border-radius: 50%;
+      background: var(--muted);
+      display: inline-block;
+    }
+
+    /* Main content */
+    main {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 15vh;
     }
     .logo img {
       width: 272px;
       height: auto;
+      display: block;
     }
-    .search-box {
+
+    /* Search box with icons */
+    .search {
+      margin-top: 24px;
+      width: min(600px, 92vw);
+    }
+    .search-bar {
       display: flex;
       align-items: center;
-      border: 1px solid #dfe1e5;
+      gap: 12px;
+      border: 1px solid var(--border);
       border-radius: 24px;
-      padding: 5px 10px;
-      width: 500px;
-      max-width: 90%;
-      margin: 20px auto;
+      padding: 8px 14px;
+      box-shadow: none;
     }
-    .search-box input {
+    .search-icon {
+      width: 20px; height: 20px;
+      opacity: 0.6;
+    }
+    .search-input {
       flex: 1;
       border: none;
       outline: none;
       font-size: 16px;
-      padding: 10px;
+      padding: 6px 0;
+      color: var(--text);
+      background: transparent;
     }
-    .buttons {
-      text-align: center;
-      margin-top: 20px;
+    .right-icons {
+      display: flex;
+      align-items: center;
+      gap: 12px;
     }
-    .buttons input {
-      background: #f8f9fa;
-      border: 1px solid #f8f9fa;
+    .icon-btn {
+      width: 24px; height: 24px;
+      display: inline-flex;
+      align-items: center; justify-content: center;
+      border-radius: 50%;
+      cursor: default;
+    }
+    .icon-btn:hover {
+      background: var(--hover);
+    }
+
+    /* Buttons */
+    .actions {
+      margin-top: 24px;
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+    }
+    .action-btn {
+      background: var(--hover);
+      border: 1px solid var(--hover);
       border-radius: 4px;
-      padding: 8px 16px;
-      margin: 5px;
+      padding: 10px 16px;
       font-size: 14px;
       cursor: pointer;
+      color: var(--text);
     }
-    .buttons input:hover {
-      border: 1px solid #dadce0;
+    .action-btn:hover {
+      border-color: #dadce0;
     }
-    .viewer {
-      margin-top: 30px;
-      width: 100%;
-      flex: 1;
-    }
-    .viewer iframe {
-      width: 100%;
-      height: 80vh;
-      border: none;
-    }
+
+    /* Footer */
     footer {
+      margin-top: auto;
       background: #f2f2f2;
       font-size: 14px;
-      color: #70757a;
+      color: var(--muted);
       display: flex;
       justify-content: space-between;
-      padding: 10px 20px;
+      align-items: center;
+      padding: 12px 20px;
+      flex-wrap: wrap;
+      gap: 8px 16px;
+    }
+    .footer-left, .footer-right {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 16px;
     }
     footer a {
-      color: #70757a;
+      color: var(--muted);
       text-decoration: none;
-      margin: 0 10px;
     }
-    footer a:hover {
-      text-decoration: underline;
-    }
+    footer a:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
   <header>
-    <a href="#">Gmail</a>
-    <a href="#">Images</a>
-    <a href="#">Apps</a>
-    <a href="#">Profile</a>
+    <a href="#" aria-label="Gmail">Gmail</a>
+    <a href="#" aria-label="Images">Images</a>
+    <span class="apps" aria-hidden="true" title="Google apps">
+      <!-- 3x3 grid icon -->
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="#5f6368">
+        <circle cx="5" cy="5" r="2"/><circle cx="12" cy="5" r="2"/><circle cx="19" cy="5" r="2"/>
+        <circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/>
+        <circle cx="5" cy="19" r="2"/><circle cx="12" cy="19" r="2"/><circle cx="19" cy="19" r="2"/>
+      </svg>
+    </span>
+    <span class="profile" title="Profile" aria-hidden="true"></span>
   </header>
 
-  <div class="logo">
-    <img src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png" alt="Google">
-  </div>
+  <main>
+    <div class="logo">
+      <!-- Default Google logo; doodles change daily -->
+      <img src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png" alt="Google">
+    </div>
 
-  <div class="search-box">
-    <input type="text" id="searchBox" placeholder="">
-  </div>
+    <section class="search">
+      <div class="search-bar">
+        <!-- Left magnifier icon -->
+        <svg class="search-icon" viewBox="0 0 24 24" fill="#9aa0a6" xmlns="http://www.w3.org/2000/svg">
+          <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16a6.471 6.471 0 004.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+        </svg>
 
-  <div class="buttons">
-    <input type="button" value="Google Search">
-    <input type="button" value="I'm Feeling Lucky">
-  </div>
+        <input class="search-input" id="searchBox" type="text" aria-label="Search" placeholder="">
 
-  <div class="viewer">
-    <iframe id="viewerFrame"></iframe>
-  </div>
+        <!-- Right mic and lens icons (decorative) -->
+        <div class="right-icons">
+          <span class="icon-btn" title="Search by voice">
+            <svg viewBox="0 0 24 24" width="20" height="20" xmlns="http://www.w3.org/2000/svg" fill="#9aa0a6">
+              <path d="M12 15a3 3 0 003-3V6a3 3 0 10-6 0v6a3 3 0 003 3zm5-3a5 5 0 01-10 0H5a7 7 0 0014 0h-2zM11 18h2v3h-2z"/>
+            </svg>
+          </span>
+          <span class="icon-btn" title="Search by image">
+            <svg viewBox="0 0 24 24" width="20" height="20" xmlns="http://www.w3.org/2000/svg" fill="#9aa0a6">
+              <path d="M21 19V5a2 2 0 00-2-2H5a2 2 0 00-2 2v14l2-2h14l2 2zM7 7h10v6l-3-3-2 2-2-2-3 3V7z"/>
+            </svg>
+          </span>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="action-btn" id="btnSearch">Google Search</button>
+        <button class="action-btn" id="btnLucky">I'm Feeling Lucky</button>
+      </div>
+    </section>
+  </main>
 
   <footer>
-    <div>
-      <a href="#">About</a>
-      <a href="#">Advertising</a>
-      <a href="#">Business</a>
-      <a href="#">How Search works</a>
+    <div class="footer-left">
+      <a href="#" aria-label="About">About</a>
+      <a href="#" aria-label="Advertising">Advertising</a>
+      <a href="#" aria-label="Business">Business</a>
+      <a href="#" aria-label="How Search works">How Search works</a>
     </div>
-    <div>
-      <a href="#">Privacy</a>
-      <a href="#">Terms</a>
-      <a href="#">Settings</a>
+    <div class="footer-right">
+      <a href="#" aria-label="Privacy">Privacy</a>
+      <a href="#" aria-label="Terms">Terms</a>
+      <a href="#" aria-label="Settings">Settings</a>
     </div>
   </footer>
 
   <script>
-    document.getElementById('searchBox').addEventListener('keypress', function(e) {
-      if (e.key === 'Enter') {
-        const input = e.target.value.trim();
-        const urlPattern = /^(https?:\/\/)?([\w\-]+\.)+[\w\-]+(\/.*)?$/i;
-        
-        if (!urlPattern.test(input)) {
-          e.target.value = '';
-          e.target.placeholder = 'Must be link';
-          setTimeout(() => e.target.placeholder = '', 2000);
-          return;
-        }
-        
-        let url = input.startsWith('http') ? input : 'https://' + input;
-        const parts = url.replace(/^https?:\/\//, '').split('/');
-        const domain = parts[0].replace(/\./g, '-');
-        const path = parts.slice(1).join('/');
-        
-        const translateUrl = `https://${domain}.translate.goog/${path}?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en-US&_x_tr_pto=wapp`;
-        
-        document.getElementById('viewerFrame').src = translateUrl;
-        e.target.value = '';
+    function toTranslateGoog(rawInput) {
+      const input = rawInput.trim();
+      // basic URL check; allows domain.tld[/path]
+      const urlPattern = /^(https?:\/\/)?([\w-]+\.)+[\w-]+(\/.*)?$/i;
+      if (!urlPattern.test(input)) return null;
+
+      const url = input.startsWith('http') ? input : 'https://' + input;
+      const parts = url.replace(/^https?:\/\//, '').split('/');
+      const domain = parts[0].replace(/\./g, '-');
+      const path = parts.slice(1).join('/');
+
+      return `https://${domain}.translate.goog/${path}?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en-US&_x_tr_pto=wapp`;
+    }
+
+    function openTranslateFromField() {
+      const el = document.getElementById('searchBox');
+      const translateUrl = toTranslateGoog(el.value);
+      if (!translateUrl) {
+        el.value = '';
+        el.placeholder = 'Must be link';
+        setTimeout(() => { el.placeholder = ''; }, 2000);
+        return;
       }
+      window.open(translateUrl, '_blank');
+      el.value = '';
+    }
+
+    // Enter on input
+    document.getElementById('searchBox').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') openTranslateFromField();
     });
+
+    // Buttons trigger same behavior
+    document.getElementById('btnSearch').addEventListener('click', openTranslateFromField);
+    document.getElementById('btnLucky').addEventListener('click', openTranslateFromField);
   </script>
 </body>
 </html>
