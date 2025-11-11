@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>New Tab</title>
+  <!-- Chromebook new tab favicon -->
   <link rel="icon" href="https://ssl.gstatic.com/chrome/chrome-logos/logo-new-tab.png">
   <style>
     body {
@@ -13,10 +14,11 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
+      justify-content: flex-start;
       height: 100vh;
     }
     .logo {
+      margin-top: 15vh;
       margin-bottom: 30px;
     }
     .logo img {
@@ -58,6 +60,16 @@
       margin-top: 20px;
       font-size: 14px;
     }
+    .viewer {
+      margin-top: 30px;
+      width: 100%;
+      flex: 1;
+    }
+    .viewer iframe {
+      width: 100%;
+      height: 80vh;
+      border: none;
+    }
   </style>
 </head>
 <body>
@@ -73,31 +85,14 @@
   </div>
   <div class="toggle">
     <label>
-      <input type="checkbox" id="useDirect"> Use direct link instead of about:blank
+      <input type="checkbox" id="useDirect"> Use direct link instead of iframe
     </label>
+  </div>
+  <div class="viewer">
+    <iframe id="viewerFrame"></iframe>
   </div>
 
   <script>
-    function openAboutBlank(translateUrl) {
-      const newWin = window.open('about:blank', '_blank');
-      const html = `
-        <!DOCTYPE html>
-        <html>
-        <head>
-          <title>Google</title>
-          <link rel="icon" href="https://www.google.com/favicon.ico">
-        </head>
-        <body style="font-family:Arial,sans-serif;text-align:center;margin-top:20%;">
-          <img src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png" alt="Google">
-          <p>Loading…</p>
-          <script>window.location.href="${translateUrl}";<\/script>
-        </body>
-        </html>
-      `;
-      newWin.document.write(html);
-      newWin.document.close();
-    }
-
     document.getElementById('searchBox').addEventListener('keypress', function(e) {
       if (e.key === 'Enter') {
         const input = e.target.value.trim();
@@ -121,7 +116,7 @@
         if (useDirect) {
           window.open(translateUrl, '_blank');
         } else {
-          openAboutBlank(translateUrl);
+          document.getElementById('viewerFrame').src = translateUrl;
         }
         e.target.value = '';
       }
