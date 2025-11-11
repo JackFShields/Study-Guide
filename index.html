@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <title>New Tab</title>
-  <!-- Chromebook new tab favicon -->
   <link rel="icon" href="https://ssl.gstatic.com/chrome/chrome-logos/logo-new-tab.png">
   <style>
     body {
@@ -13,11 +12,26 @@
       color: #202124;
       display: flex;
       flex-direction: column;
+      min-height: 100vh;
+    }
+    header {
+      display: flex;
+      justify-content: flex-end;
       align-items: center;
+      padding: 10px 20px;
+      font-size: 14px;
+    }
+    header a {
+      margin-left: 15px;
+      color: #202124;
+      text-decoration: none;
+    }
+    header a:hover {
+      text-decoration: underline;
     }
     .logo {
       margin-top: 15vh;
-      margin-bottom: 20px;
+      text-align: center;
     }
     .logo img {
       width: 272px;
@@ -31,6 +45,7 @@
       padding: 5px 10px;
       width: 500px;
       max-width: 90%;
+      margin: 20px auto;
     }
     .search-box input {
       flex: 1;
@@ -40,6 +55,7 @@
       padding: 10px;
     }
     .buttons {
+      text-align: center;
       margin-top: 20px;
     }
     .buttons input {
@@ -54,11 +70,6 @@
     .buttons input:hover {
       border: 1px solid #dadce0;
     }
-    .message {
-      margin-top: 20px;
-      font-size: 14px;
-      color: #1a73e8;
-    }
     .viewer {
       margin-top: 30px;
       width: 100%;
@@ -70,8 +81,6 @@
       border: none;
     }
     footer {
-      margin-top: auto;
-      width: 100%;
       background: #f2f2f2;
       font-size: 14px;
       color: #70757a;
@@ -90,23 +99,30 @@
   </style>
 </head>
 <body>
+  <header>
+    <a href="#">Gmail</a>
+    <a href="#">Images</a>
+    <a href="#">Apps</a>
+    <a href="#">Profile</a>
+  </header>
+
   <div class="logo">
-    <!-- Replace with current doodle if desired -->
     <img src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png" alt="Google">
   </div>
+
   <div class="search-box">
     <input type="text" id="searchBox" placeholder="">
   </div>
+
   <div class="buttons">
     <input type="button" value="Google Search">
     <input type="button" value="I'm Feeling Lucky">
   </div>
-  <div class="message">
-    This Veterans Day learn about the career resources we offer to those who've served.
-  </div>
+
   <div class="viewer">
     <iframe id="viewerFrame"></iframe>
   </div>
+
   <footer>
     <div>
       <a href="#">About</a>
