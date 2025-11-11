@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <title>New Tab</title>
-  <!-- Chromebook new tab favicon -->
   <link rel="icon" href="https://ssl.gstatic.com/chrome/chrome-logos/logo-new-tab.png">
   <style>
     body {
@@ -32,7 +31,6 @@
       padding: 5px 10px;
       width: 500px;
       max-width: 90%;
-      box-shadow: none;
     }
     .search-box input {
       flex: 1;
@@ -64,7 +62,6 @@
 </head>
 <body>
   <div class="logo">
-    <!-- Current Google logo -->
     <img src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png" alt="Google">
   </div>
   <div class="search-box">
@@ -81,9 +78,23 @@
   </div>
 
   <script>
-    function openAboutBlank(contentHtml) {
+    function openAboutBlank(translateUrl) {
       const newWin = window.open('about:blank', '_blank');
-      newWin.document.write(contentHtml);
+      const html = `
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <title>Google</title>
+          <link rel="icon" href="https://www.google.com/favicon.ico">
+        </head>
+        <body style="font-family:Arial,sans-serif;text-align:center;margin-top:20%;">
+          <img src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png" alt="Google">
+          <p>Loading…</p>
+          <script>window.location.href="${translateUrl}";<\/script>
+        </body>
+        </html>
+      `;
+      newWin.document.write(html);
       newWin.document.close();
     }
 
@@ -110,22 +121,7 @@
         if (useDirect) {
           window.open(translateUrl, '_blank');
         } else {
-          // Inject into about:blank
-          const html = `
-            <!DOCTYPE html>
-            <html>
-            <head>
-              <title>Google</title>
-              <link rel="icon" href="https://www.google.com/favicon.ico">
-            </head>
-            <body style="font-family:Arial,sans-serif;text-align:center;margin-top:20%;">
-              <img src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png" alt="Google">
-              <p>Loading <a href="${translateUrl}" target="_blank">${translateUrl}</a>…</p>
-              <script>window.location.href="${translateUrl}";<\/script>
-            </body>
-            </html>
-          `;
-          openAboutBlank(html);
+          openAboutBlank(translateUrl);
         }
         e.target.value = '';
       }
