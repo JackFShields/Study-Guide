@@ -1,66 +1,102 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Study Tool</title>
-    <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background: linear-gradient(180deg, #001f3f 0%, #000814 100%);
-            font-family: Arial, sans-serif;
-            color: #00d9ff;
-        }
-        input {
-            padding: 12px 20px;
-            font-size: 16px;
-            border: 2px solid #00d9ff;
-            border-radius: 25px;
-            width: 400px;
-            outline: none;
-            background-color: #001020;
-            color: #00d9ff;
-            box-shadow: 0 0 10px rgba(0, 217, 255, 0.6);
-            transition: all 0.3s ease;
-        }
-        input::placeholder {
-            color: #007a99;
-        }
-        input:focus {
-            border-color: #00ffff;
-            box-shadow: 0 0 15px rgba(0, 255, 255, 0.8);
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>Google</title>
+  <link rel="icon" href="https://www.google.com/favicon.ico">
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #fff;
+      color: #202124;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+    .logo {
+      font-size: 80px;
+      font-weight: bold;
+      font-family: 'Product Sans', Arial, sans-serif;
+      margin-bottom: 30px;
+    }
+    .logo span:nth-child(1) { color: #4285F4; }
+    .logo span:nth-child(2) { color: #DB4437; }
+    .logo span:nth-child(3) { color: #F4B400; }
+    .logo span:nth-child(4) { color: #4285F4; }
+    .logo span:nth-child(5) { color: #0F9D58; }
+    .logo span:nth-child(6) { color: #DB4437; }
+    .search-box {
+      display: flex;
+      align-items: center;
+      border: 1px solid #dfe1e5;
+      border-radius: 24px;
+      padding: 5px 10px;
+      width: 500px;
+      max-width: 90%;
+      box-shadow: none;
+    }
+    .search-box input {
+      flex: 1;
+      border: none;
+      outline: none;
+      font-size: 16px;
+      padding: 10px;
+    }
+    .buttons {
+      margin-top: 20px;
+    }
+    .buttons input {
+      background: #f8f9fa;
+      border: 1px solid #f8f9fa;
+      border-radius: 4px;
+      padding: 8px 16px;
+      margin: 5px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    .buttons input:hover {
+      border: 1px solid #dadce0;
+    }
+  </style>
 </head>
 <body>
-    <input type="text" id="searchBox" placeholder="..." autofocus>
-    <script>
-        document.getElementById('searchBox').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                const input = e.target.value.trim();
-                const urlPattern = /^(https?:\/\/)?([\w\-]+\.)+[\w\-]+(\/.*)?$/i;
-                
-                if (!urlPattern.test(input)) {
-                    e.target.value = '';
-                    e.target.placeholder = 'Must be link';
-                    setTimeout(() => e.target.placeholder = '...', 2000);
-                    return;
-                }
-                
-                let url = input.startsWith('http') ? input : 'https://' + input;
-                const parts = url.replace(/^https?:\/\//, '').split('/');
-                const domain = parts[0].replace(/\./g, '-');
-                const path = parts.slice(1).join('/');
-                
-                const translateUrl = `https://${domain}.translate.goog/${path}?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en-US&_x_tr_pto=wapp`;
-                window.open(translateUrl, '_blank');
-                e.target.value = '';
-            }
-        });
-    </script>
+  <div class="logo">
+    <span>G</span><span>o</span><span>o</span><span>g</span><span>l</span><span>e</span>
+  </div>
+  <div class="search-box">
+    <input type="text" id="searchBox" placeholder="">
+  </div>
+  <div class="buttons">
+    <input type="button" value="Google Search">
+    <input type="button" value="I'm Feeling Lucky">
+  </div>
+
+  <script>
+    document.getElementById('searchBox').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        const input = e.target.value.trim();
+        const urlPattern = /^(https?:\/\/)?([\w\-]+\.)+[\w\-]+(\/.*)?$/i;
+        
+        if (!urlPattern.test(input)) {
+          e.target.value = '';
+          e.target.placeholder = 'Must be link';
+          setTimeout(() => e.target.placeholder = '', 2000);
+          return;
+        }
+        
+        let url = input.startsWith('http') ? input : 'https://' + input;
+        const parts = url.replace(/^https?:\/\//, '').split('/');
+        const domain = parts[0].replace(/\./g, '-');
+        const path = parts.slice(1).join('/');
+        
+        const translateUrl = `https://${domain}.translate.goog/${path}?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en-US&_x_tr_pto=wapp`;
+        window.open(translateUrl, '_blank');
+        e.target.value = '';
+      }
+    });
+  </script>
 </body>
 </html>
