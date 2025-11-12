@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <title>New Tab</title>
-  <!-- Monochrome chrome-like favicon as embedded SVG -->
   <link rel="icon" type="image/svg+xml"
         href='data:image/svg+xml;utf8,
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
@@ -38,8 +37,6 @@
       flex-direction: column;
       min-height: 100vh;
     }
-
-    /* Header (top-right links) */
     header {
       display: flex;
       justify-content: flex-end;
@@ -67,8 +64,6 @@
       background: var(--muted);
       display: inline-block;
     }
-
-    /* Main content */
     main {
       display: flex;
       flex-direction: column;
@@ -80,8 +75,6 @@
       height: auto;
       display: block;
     }
-
-    /* Search box with icons */
     .search {
       margin-top: 24px;
       width: min(600px, 92vw);
@@ -123,8 +116,6 @@
     .icon-btn:hover {
       background: var(--hover);
     }
-
-    /* Buttons */
     .actions {
       margin-top: 24px;
       display: flex;
@@ -144,7 +135,6 @@
       border-color: #dadce0;
     }
 
-    /* Footer */
     footer {
       margin-top: auto;
       background: #f2f2f2;
@@ -187,20 +177,16 @@
 
   <main>
     <div class="logo">
-      <!-- Default Google logo; doodles change daily -->
       <img src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png" alt="Google">
     </div>
 
     <section class="search">
       <div class="search-bar">
-        <!-- Left magnifier icon -->
         <svg class="search-icon" viewBox="0 0 24 24" fill="#9aa0a6" xmlns="http://www.w3.org/2000/svg">
           <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16a6.471 6.471 0 004.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
         </svg>
 
         <input class="search-input" id="searchBox" type="text" aria-label="Search" placeholder="">
-
-        <!-- Right mic and lens icons (decorative) -->
         <div class="right-icons">
           <span class="icon-btn" title="Search by voice">
             <svg viewBox="0 0 24 24" width="20" height="20" xmlns="http://www.w3.org/2000/svg" fill="#9aa0a6">
@@ -239,7 +225,6 @@
   <script>
     function toTranslateGoog(rawInput) {
       const input = rawInput.trim();
-      // basic URL check; allows domain.tld[/path]
       const urlPattern = /^(https?:\/\/)?([\w-]+\.)+[\w-]+(\/.*)?$/i;
       if (!urlPattern.test(input)) return null;
 
@@ -263,13 +248,9 @@
       window.open(translateUrl, '_blank');
       el.value = '';
     }
-
-    // Enter on input
     document.getElementById('searchBox').addEventListener('keypress', function(e) {
       if (e.key === 'Enter') openTranslateFromField();
     });
-
-    // Buttons trigger same behavior
     document.getElementById('btnSearch').addEventListener('click', openTranslateFromField);
     document.getElementById('btnLucky').addEventListener('click', openTranslateFromField);
   </script>
